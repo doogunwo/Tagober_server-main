@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  <style>
+    .container {
+      display: flex;
+      /* Flexbox를 사용하여 가로 정렬합니다. */
+      justify-content: center;
+      /* 수평 정렬을 가운데로 설정합니다. */
+      align-items: center;
+      /* 수직 정렬을 가운데로 설정합니다. */
+      height: 100vh;
+      /* 화면 높이에 따른 중앙 정렬을 위해 사용합니다. */
+    }
+  
+    .container_intro {
+      border: 2px solid #ddd;
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 400px;
+      height: 400px;
+    }
+  
+    .container_image {
+     
+      height: 400px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="container_image">
+      <img src="https://daddyduckinnovationlab.files.wordpress.com/2020/06/bus.gif" width="400" height="400">
+    </div>
+
+    <div class="container_intro">
+      <h1>TaGoBer </h1>
+      <hr>
+      <div class="input-group input-group-sm mb-3">
+        <span class="input-group-text" id="username">ID</span>
+        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      
+      <div class="input-group input-group-sm mb-3">
+        <span class="input-group-text" id="password">password</span>
+        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+      </div>
+
+      <div class="input-group input-group-sm mb-3">
+        <span class="input-group-text" id="email">Email</span>
+        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      
+      <div class="input-group input-group-sm mb-3">
+        <span class="input-group-text" id="phone">Phone</span>
+        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+      </div>
+
+      <div class="input-group input-group-sm mb-3">
+        <span class="input-group-text" id="name">Name</span>
+        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+      </div>
+
+      <div class="buttons">
+        <button class="btn btn-primary" onclick="signup()">회원가입</button>
+        <button class="btn btn-primary" onclick="back()">돌아가기</button>
+      </div>
+    </div>
+    </form>
+    <script>
+      function signup() {
+        // 입력된 정보 가져오기
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const name = document.getElementById('name').value;
+        let userData = {
+          username: username,
+          password: password,
+          email: email,
+          phone: phone,
+          name: name
+        };
+
+        // 서버로 데이터 전송
+        $.ajax({
+          url: '/signup',
+          method: 'POST',
+          data: JSON.stringify(userData),
+          contentType: 'application/json',
+          success: function (response) {
+            console.log('서버 응답:', response);
+            window.location.href = "/"
+          },
+          error: function (error) {
+            console.error('서버 요청 실패:', error);
+          }
+        });
+      }
+      function back() {
+        window.location.href = "/";
+      }
+    </script>
+  </div>
+</body>
+
+</html>

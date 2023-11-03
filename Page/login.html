@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .form-group label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    .form-group button {
+      padding: 10px 40px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="container">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <h2>Login</h2>
+    <form action="/login" method="POST">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="form-group">
+        <button type="button" id="login_button"   onclick="login()">로그 인</button>
+      </div>
+    </form>
+    <script>
+      function login(){
+
+
+        let username = document.getElementById('username').value;
+        let password = document.getElementById('password').value;
+
+        let loginData = {
+            username: username,
+            password: password
+          };
+        
+        $.ajax({
+              url: '/login', // 서버 엔드포인트
+              method: 'POST',
+              data: JSON.stringify(loginData), // 데이터를 JSON 문자열로 변환하여 전송
+              contentType: 'application/json',
+              success: function(response) {
+                console.log('서버 응답:', response);
+                // 로그인 성공 후 원하는 동작 수행
+                window.location.href="/dashboard"
+              },
+              error: function(error) {
+                console.error('서버 요청 실패:', error);
+                // 로그인 실패 처리 로직
+              }
+        }); 
+       
+
+
+
+
+
+      }
+
+    </script>
+  </div>
+</body>
+</html>

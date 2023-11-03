@@ -1,0 +1,98 @@
+<!-- 대시보드 페이지 -->
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+
+   
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top">
+      <div>
+        <h5><span id="name"></span></h5>
+      </div>
+      <div>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <!-- 이미지 등록 폼 -->
+        <form id="imageUploadForm" enctype="multipart/form-data">
+          <div>
+            <input type="file" id="imageInput" name="image">
+          </div>
+          <div>
+            <button type="button" onclick="uploadImages()">얼굴 등록</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="bottom">
+      <div>
+        <h1>탑승 이력</h1>
+        <div id="here"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // 로그인한 사용자의 이름 표시
+          $.ajax({
+            url: '/getUsername',
+            method: 'GET',
+            dataType:"json",
+            success: function(response) {
+                // user 데이터를 받아와서 처리
+                $('#name').text(response.username);
+            },
+            error: function(err) {
+                console.error(err);
+                // 오류 처리
+            }
+            });
+            
+          function uploadImages(){
+              console.log("업로드이미지 함수 동작하였음.")
+              var fileInput = document.getElementById('imageInput');
+              var file = fileInput.files[0];
+
+              var formData = new FormData();
+              formData.append('image', file);
+              requestData = {
+                  result : 'update'
+                }               
+              $.ajax({
+                        url: '/upload',
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                          console.log(response)
+                          $('#uploadedImage').attr('src', response.imageURL);
+                        },
+                        error: function() {
+                          console.error('이미지 전송 실패');
+                        }
+                });
+                
+
+              $.ajax({
+                        url: '/update',
+                        type: 'POST',
+                        data : requestData,
+                        contentType: false,
+                        success:function(response){
+                          console.log('POST 요청 성공:', response);
+                        },
+                        error:function(error){
+                          console.log('POST 요청 실패:', error);
+                        }
+
+                });
+              
+
+            }
+            
+
+  </script>
+</body>
+</html>

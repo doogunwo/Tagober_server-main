@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  <title>TaGoBer</title>
+</head>
+
+<style>
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .container_intro {
+    border: 2px solid #ddd;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    height: 400px;
+  }
+
+  .container_image {
+   height: 400px;
+  }
+</style>
+
+<body>
+  <div class="container">
+    <div class="container_image">
+      <img src="https://daddyduckinnovationlab.files.wordpress.com/2020/06/bus.gif" width="400" height="400">
+    </div>
+
+    <div class="container_intro">
+      <h1>TaGoBer</h1>
+      <hr>
+      <div class="form-floating mb-3">
+        <input type="id" class="form-control" id="username">
+        <label for="floatingInput">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="password" placeholder="Password">
+        <label for="floatingPassword">Password</label>
+      </div>
+      <hr>
+      <div>
+        <button  class="btn btn-primary"   onclick="login()">로그인</button>
+        <button class="btn btn-primary" onclick="signup()">회원가입</button>
+      </div>
+    </div>
+
+  </div>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <script>
+    function signup() {
+      // 회원가입 버튼 클릭 시 동작할 코드 작성
+      // 예: 회원가입 페이지로 이동하는 코드
+      window.location.href = "/signup";
+    }
+
+    function login() {
+
+      console.log("login button click")
+      const username = $('#username').val()
+      const password = $('#password').val()
+
+      let loginData = {
+        username: username,
+        password: password
+      };
+
+      $.ajax({
+        url: '/login', // 서버 엔드포인트
+        method: 'POST',
+        data: JSON.stringify(loginData), // 데이터를 JSON 문자열로 변환하여 전송
+        contentType: 'application/json',
+        success: function (response) {
+          console.log('서버 응답:', response);
+          // 로그인 성공 후 원하는 동작 수행
+          window.location.href = "/dashboard"
+        },
+        error: function (error) {
+          console.error('서버 요청 실패:', error);
+          // 로그인 실패 처리 로직
+        }
+      });
+    }
+
+  </script>
+</body>
+
+</html>
