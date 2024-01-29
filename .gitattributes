@@ -1,0 +1,4 @@
+Makefile linguist-detectable=false
+*.css linguist-detectable=false
+*.html linguist-detectable=false
+*.tex linguist-detectable=false
